@@ -1,5 +1,10 @@
+"""
+This program generates sentences by randomly choosing a determiner, noun, verb, adjective, and prepostional phrases.
+CREATIVITY REQUIREMENT:
+The base requirements have been met, to exceed the requirements, I have added a function to get an adjective and include two prepostitional phrases instead of one.
+"""
+
 from random import choice
-import os
 
 def get_determiner(quantity):
   """Return a randomly chosen determiner. A determiner is
@@ -47,6 +52,13 @@ def get_noun(quantity):
     noun = choice(nouns)
     return noun
 
+def get_adjective():
+    """
+    Return a randomly chosen adjective.
+    """
+    adjectives = ["big", "small", "tall", "short", "fat", "skinny", "happy", "sad", "angry", "calm"]
+    return choice(adjectives)
+
 def get_verb(quantity, tense):
     if tense == "past":
         verbs = [ "drank", "ate", "grew", "laughed", "thought", "ran", "slept", "talked", "walked", "wrote"]
@@ -61,11 +73,48 @@ def get_verb(quantity, tense):
     verb = choice(verbs)
     return verb
 
+def get_preposition():
+  """Return a randomly chosen preposition
+  from this list of prepositions:
+      "about", "above", "across", "after", "along",
+      "around", "at", "before", "behind", "below",
+      "beyond", "by", "despite", "except", "for",
+      "from", "in", "into", "near", "of",
+      "off", "on", "onto", "out", "over",
+      "past", "to", "under", "with", "without"
+  Return: a randomly chosen preposition.
+  """
+  preposition = ["about", "above", "across", "after", "along", "around", "at", "before", "behind", "below", "beyond", "by", "despite", "except", "for", "from", "in", "into", "near", "of", "off", "on", "onto", "out", "over", "past", "to", "under", "with", "without"]
+  
+  return choice(preposition)
+
+
+def get_prepositional_phrase(quantity):
+  """Build and return a prepositional phrase composed
+  of three words: a preposition, a determiner, and a
+  noun by calling the get_preposition, get_determiner,
+  and get_noun functions.
+  Parameter
+      quantity: an integer that determines if the
+          determiner and noun in the prepositional
+          phrase returned from this function should
+          be single or pluaral.
+  Return: a prepositional phrase.
+  """
+  preposition = get_preposition()
+  determiner = get_determiner(quantity)
+  noun = get_noun(quantity)
+  phrase = f"{preposition} {determiner} {noun}"
+  return phrase
+
 def make_sentence(quantity, tense):
     determiner = get_determiner(quantity)
     noun = get_noun(quantity)
     verb = get_verb(quantity, tense)
-    sentence = f"{determiner.capitalize()} {noun} {verb}."
+    adjective = get_adjective()
+    preposition1 = get_prepositional_phrase(quantity)
+    preposition2 = get_prepositional_phrase(quantity)
+    sentence = f"{determiner.capitalize()} {adjective} {noun} {preposition1} {verb} {preposition2}."
     return sentence
 
 def main():
@@ -76,8 +125,6 @@ def main():
     print(make_sentence(2, "present"))
     print(make_sentence(2, "future"))
 
-
-os.system("clear")
 main()
 
 
